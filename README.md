@@ -1,4 +1,4 @@
-# AndroidProject
+# CodeMobile
 Development in Kotlin for integrative project 4.
 Integrantes:
 - André Guilherme Gomes do Nascimento

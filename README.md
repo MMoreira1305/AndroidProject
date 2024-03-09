@@ -5,3 +5,5 @@ Integrantes:
 - Matheus Michael Modesto Moreira
 - João Victor Melo Tavares de Lima
 - Marcos Vinícius
+
+Arquitetura: MVC

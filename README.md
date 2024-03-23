@@ -6,4 +6,4 @@ Integrantes:
 - João Victor Melo Tavares de Lima
 - Marcos Vinícius
 
-Arquitetura: MVC
+Arquitetura: VIPER

@@ -5,7 +5,7 @@ Development in Kotlin for integrative project 4.
 - André Guilherme Gomes do Nascimento
 - Matheus Michael Modesto Moreira
 - João Victor Melo Tavares de Lima
-- Marcos Vinícius
+- Marcos Vinícius Holanda Farias
 
 # Arquitetura: VIPER
 

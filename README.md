@@ -9,6 +9,9 @@ Development in Kotlin for integrative project 4.
 
 # Arquitetura: VIPER
 
+# Telas
+https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=0-1&mode=design&t=5Bh1pN5qI3Rn8qTD-0
+
 # Requisitos:
 •
 •

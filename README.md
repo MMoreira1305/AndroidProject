@@ -1,4 +1,4 @@
-# CodeMobile
+# Partner
 Development in Kotlin for integrative project 4.
 
 # Integrantes:

@@ -34,5 +34,4 @@ ameaças de segurança, garantindo que não contenham malware ou conteúdo malic
 - Disponibilidade:
  O aplicativo deve estar disponível e acessível a qualquer momento, permitindo que os usuários visualizem suas tarefas, recebam lembretes e acessem os recursos adicionais conforme necessário, independentemente do horário ou localização.
 A infraestrutura do aplicativo, incluindo servidores e conexões de rede, deve ser confiável e ter redundância para evitar interrupções prolongadas nos serviços.
-Usabilidade:
 *André Guilherme*

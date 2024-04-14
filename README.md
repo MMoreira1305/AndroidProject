@@ -19,6 +19,6 @@ https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=0-
 
 - Permitir que o aluno se conecte a uma turma utilizando um código de matrícula fornecido. A funcionalidade deve estar disponível no perfil do aluno, onde ele pode inserir o código de matrícula para se juntar à turma. Após a conexão bem-sucedida, o aluno deve ter acesso às informações da turma, como materiais de estudo, comunicados e eventos.
 
-- :
+- O sistema deve enviar notificações para o aluno quando uma atividade estiver próxima do prazo de conclusão. As notificações devem ser enviadas com antecedência, permitindo ao aluno tempo suficiente para concluir a atividade antes do prazo. As notificações podem ser enviadas através de alertas no aplicativo móvel
 
 - :

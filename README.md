@@ -21,4 +21,4 @@ https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=0-
 
 - O sistema deve enviar notificações para o aluno quando uma atividade estiver próxima do prazo de conclusão. As notificações devem ser enviadas com antecedência, permitindo ao aluno tempo suficiente para concluir a atividade antes do prazo. As notificações podem ser enviadas através de alertas no aplicativo móvel
 
-- :
+- Permitir que o aluno crie e gerencie notas diretamente no aplicativo móvel. As notas podem ser usadas para anotações pessoais, lembretes, resumos de aulas, entre outros fins. As notas devem ser editáveis e permitir formatação básica de texto.

@@ -6,6 +6,8 @@ Development in Kotlin for integrative project 4.
 - Matheus Michael Modesto Moreira
 - João Victor Melo Tavares de Lima
 - Marcos Vinícius Holanda Farias
+- João Victor Matos Brandão
+- Amilton Douglas Leoncio Lima
 
 # Arquitetura: VIPER
 

@@ -28,3 +28,5 @@ https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=19
 
 - Permitir que o aluno crie e gerencie notas diretamente no aplicativo móvel. As notas podem ser usadas para anotações pessoais, lembretes, resumos de aulas, entre outros fins. As notas devem ser editáveis e permitir formatação básica de texto.
 https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=185-267&mode=design&t=1VhsHgvTy4a1oCwa-0
+
+- Permitir que os alunos recebam notas e feedbacks sobre suas atividades submetidas. Os feedbacks e notas devem ser acessíveis através da tela de histórico, onde os alunos podem visualizar o desempenho em cada atividade, as informações devem incluir a nota atribuída, comentários do professor e quaisquer observações adicionais.

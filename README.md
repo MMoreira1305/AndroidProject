@@ -30,3 +30,4 @@ https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=19
 https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=185-267&mode=design&t=1VhsHgvTy4a1oCwa-0
 
 - Permitir que os alunos recebam notas e feedbacks sobre suas atividades submetidas. Os feedbacks e notas devem ser acessíveis através da tela de histórico, onde os alunos podem visualizar o desempenho em cada atividade, as informações devem incluir a nota atribuída, comentários do professor e quaisquer observações adicionais.
+https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=0-1&mode=design&t=1VhsHgvTy4a1oCwa-0

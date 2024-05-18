@@ -1,4 +1,4 @@
-package com.example.hello_world
+package com.example.partner
 
 import org.junit.Test
 

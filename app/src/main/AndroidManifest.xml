@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Listview"
         tools:targetApi="31">
         <activity
-            android:name="com.example.hello_world.MainActivity"
+            android:name="com.example.partner.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,4 +4,24 @@
     <string name="addPerson">Add Person</string>
     <string name="name">Name</string>
     <string name="phone">Phone Number</string>
+    <string name="todo2" />
+    <string name="icone" />
+    <string name="a_partner_chegou_para_expandir_os_limites_da_educa_o">a partner chegou para expandir os limites da educação</string>
+    <string name="come_ar">começar</string>
+    <string name="texthome">Acompanhe a rotina acadêmica com facilidade através do nosso aplicativo de agenda virtual, especialmente desenvolvido para professores e pais. Com ele, educadores podem registrar as atividades diárias dos alunos de forma prática e eficiente, enquanto os pais recebem notificações instantâneas sobre as tarefas do dia. Assim, fica mais simples gerenciar o tempo de estudo das crianças, garantindo que elas se dediquem às atividades escolares com o apoio necessário em casa</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="email">email</string>
+    <string name="senha">senha</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="matricula">matricula</string>
+    <string name="entrar">entrar</string>
 </resources>

@@ -24,4 +24,11 @@
     <string name="cadastro">Cadastro</string>
     <string name="matricula">matricula</string>
     <string name="entrar">entrar</string>
+    <string name="got_login">Entrar</string>
+    <string name="field_name">Preencha o campo com o seu Nome!</string>
+    <string name="email_field">E-mail inválido!</string>
+    <string name="login_error">Login Error</string>
+    <string name="welcome_message_initial">Bem vindo ao app Minha lista de Contatos!</string>
+    <string name="type_email">Digite seu e-mail:</string>
+    <string name="type_name">Digite seu Nome:</string>
 </resources>

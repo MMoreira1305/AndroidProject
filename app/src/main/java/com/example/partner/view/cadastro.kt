@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.partner.LoginActivity
 import com.example.hello_world.R
 
 class cadastro : AppCompatActivity() {
@@ -17,7 +18,7 @@ class cadastro : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro)
         val button = findViewById<Button>(R.id.cadastrar)
         button.setOnClickListener {
-            val intent = Intent(this, login::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

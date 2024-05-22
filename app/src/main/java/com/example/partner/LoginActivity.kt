@@ -13,6 +13,7 @@ import com.example.partner.model.EMAIL_REGEX
 import com.example.partner.model.isFieldValid
 import com.google.firebase.auth.FirebaseAuth
 
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding

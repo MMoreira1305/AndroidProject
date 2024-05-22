@@ -110,7 +110,7 @@
         android:layout_marginEnd="301dp"
         android:layout_marginBottom="37dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Partner"
+        android:text="@string/partner"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:typeface="normal"

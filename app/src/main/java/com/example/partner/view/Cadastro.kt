@@ -66,14 +66,14 @@ class Cadastro : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val usuarios = hashMapOf(
+        val usuariosa = hashMapOf(
             "matricula" to matricula
         )
 
         usuarioID = FirebaseAuth.getInstance().currentUser?.uid  // Assign value to usuarioID here
 
         val documentReference = db.collection("Usuarios").document(usuarioID!!)
-        documentReference.set(usuarios)
+        documentReference.set(usuariosa)
             .addOnSuccessListener { }
             .addOnFailureListener { }
     }

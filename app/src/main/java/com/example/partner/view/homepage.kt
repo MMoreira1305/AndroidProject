@@ -10,6 +10,7 @@ import com.example.hello_world.R
 class homepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide() // Adicionado para remover a barra de título
         enableEdgeToEdge()
         setContentView(R.layout.activity_homepage)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

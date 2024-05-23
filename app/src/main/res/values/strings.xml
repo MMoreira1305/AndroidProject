@@ -32,4 +32,5 @@
     <string name="type_email">Digite seu e-mail:</string>
     <string name="type_name">Digite seu Nome:</string>
     <string name="partner">Partner</string>
+    <string name="cadastrar">cadastrar</string>
 </resources>

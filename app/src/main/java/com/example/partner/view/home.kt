@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.hello_world.R
+import com.example.partner.LoginActivity
 import com.example.partner.MainActivity
 
 class home : AppCompatActivity() {
@@ -18,7 +19,7 @@ class home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         val button = findViewById<Button>(R.id.comecar)
         button.setOnClickListener {
-            val intent = Intent(this, cadastro::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

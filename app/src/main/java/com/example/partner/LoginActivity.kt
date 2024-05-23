@@ -11,6 +11,8 @@ import com.example.hello_world.R
 import com.example.hello_world.databinding.ActivityLoginBinding
 import com.example.partner.model.EMAIL_REGEX
 import com.example.partner.model.isFieldValid
+import com.example.partner.view.Cadastro
+import com.example.partner.view.homepage
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -18,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +42,20 @@ class LoginActivity : AppCompatActivity() {
     private fun setUpView() {
         binding.apply {
             btnLogin.setOnClickListener {
-                goToMainActivity()
+                goToHomePageActivity()
+            }
+            gotocadastro.setOnClickListener {
+                val intent = Intent(this@LoginActivity, Cadastro::class.java)
+                startActivity(intent)
             }
         }
     }
 
-    private fun goToMainActivity() {
+    private fun goToHomePageActivity() {
         var result = true
         val email = binding.edtEmail.text.toString()
         val password = binding.edtPwd.text.toString()
-        if (email.isFieldValid(Regex(EMAIL_REGEX))
-                .not()
-        ) {
+        if (email.isFieldValid(Regex(EMAIL_REGEX)).not()) {
             Toast.makeText(
                 this@LoginActivity,
                 getString(R.string.email_field),
@@ -59,11 +64,8 @@ class LoginActivity : AppCompatActivity() {
             result = false
         }
         if (result) {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            auth.signInWithEmailAndPassword(
-                email,
-                password
-            ).addOnCompleteListener(this) { task ->
+            val intent = Intent(this@LoginActivity, homepage::class.java)
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     startActivity(intent)
                 } else {
@@ -76,5 +78,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 }

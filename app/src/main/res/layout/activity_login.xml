@@ -109,4 +109,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/gotocadastro"
+        android:layout_width="139dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="96dp"
+        android:backgroundTint="@color/blu"
+        android:hint="@string/cadastrar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edtPwd"
+        app:layout_constraintStart_toStartOf="@+id/edtPwd"
+        app:layout_constraintTop_toTopOf="@+id/btnLogin"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

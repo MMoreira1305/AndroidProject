@@ -39,7 +39,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginBottom="113dp"
         android:text="PARTNER"
-        android:textColor="#ECE4E4"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/fundo"

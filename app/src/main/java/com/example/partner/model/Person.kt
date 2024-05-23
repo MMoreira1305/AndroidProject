@@ -1,6 +1,5 @@
-package com.example.hello_world
+package com.example.partner.model
 
-import android.os.Parcelable
 data class Person(
     val name: String,
     val phone: String

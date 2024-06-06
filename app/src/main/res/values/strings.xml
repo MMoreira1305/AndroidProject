@@ -33,4 +33,11 @@
     <string name="type_name">Digite seu Nome:</string>
     <string name="partner">Partner</string>
     <string name="cadastrar">cadastrar</string>
+    <string name="aluno">Sergio Henrique Seixas</string>
+    <string name="matriculaperfil">MATRÍCULA</string>
+    <string name="turnoperfil">TURNO</string>
+    <string name="dataperfil">DATA DE CRIAÇÃO</string>
+    <string name="contatoperfil">CONTATO</string>
+    <string name="emailperfil">EMAIL</string>
+    <string name="nascimentoperfil">NASCIMENTO</string>
 </resources>

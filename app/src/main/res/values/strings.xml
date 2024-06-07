@@ -1,8 +1,8 @@
 <resources>
-    <string name="hello">Hello, %s</string>
-    <string name="app_name">listview</string>
-    <string name="addPerson">Add Person</string>
-    <string name="name">Name</string>
+    <string name="hello" translatable="false">Hello, %s</string>
+    <string name="app_name" translatable="false">listview</string>
+    <string name="addPerson" translatable="false">Add Person</string>
+    <string name="name" translatable="false">Name</string>
     <string name="phone" translatable="false">Phone Number</string>
     <string name="todo2" translatable="false" />
     <string name="icone" translatable="false" />
@@ -38,4 +38,13 @@
     <string name="activity_history" translatable="false">Histórico</string>
     <string name="cadastrar" translatable="false">cadastrar</string>
     <string name="search" translatable="false">Pesquisar</string>
+
+    <string name="aluno" translatable="false">Sergio Henrique Seixas</string>
+    <string name="matriculaperfil" translatable="false">MATRÍCULA</string>
+    <string name="turnoperfil" translatable="false">TURNO</string>
+    <string name="dataperfil" translatable="false">DATA DE CRIAÇÃO</string>
+    <string name="contatoperfil" translatable="false">CONTATO</string>
+    <string name="emailperfil" translatable="false">EMAIL</string>
+    <string name="nascimentoperfil" translatable="false">NASCIMENTO</string>
+>>>>>>> 0d2d1eb43ef7e9c249732fb39f4e3f49566172ec
 </resources>

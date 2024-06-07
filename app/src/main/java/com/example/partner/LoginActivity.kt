@@ -12,7 +12,7 @@ import com.example.hello_world.databinding.ActivityLoginBinding
 import com.example.partner.model.EMAIL_REGEX
 import com.example.partner.model.isFieldValid
 import com.example.partner.view.Cadastro
-import com.example.partner.view.homepage
+import com.example.partner.view.Homepage
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
             result = false
         }
         if (result) {
-            val intent = Intent(this@LoginActivity, homepage::class.java)
+            val intent = Intent(this@LoginActivity, Homepage::class.java)
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     startActivity(intent)

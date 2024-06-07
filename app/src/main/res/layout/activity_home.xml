@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.partner.view.home">
+        tools:context="com.example.partner.view.Home">
 
         <ImageView
             android:id="@+id/imagemfundo"

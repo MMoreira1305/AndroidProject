@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.0"
+agp = "8.3.1"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -17,9 +17,13 @@ firebase="4.4.1"
 firebaseBom="33.0.0"
 parcelize = "1.9.22"
 firebaseAuthKtx = "23.0.0"
+swiperefreshlayout = "1.1.0"
+tableview = "2.8.0"
+firebaseDatabaseKtx = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -35,6 +39,8 @@ firebase-bom = {group = "com.google.firebase", name = "firebase-bom", version.re
 firebase-auth = {group = "com.google.firebase", name = "firebase-auth"}
 firebase-firestore = {group = "com.google.firebase", name = "firebase-firestore"}
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+tableview = { module = "de.codecrafters.tableview:tableview", version.ref = "tableview" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

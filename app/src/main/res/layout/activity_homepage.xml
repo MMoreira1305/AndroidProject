@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="com.example.partner.view.homepage">
+    tools:context="com.example.partner.view.Homepage">
 
     <TextView
         android:id="@+id/fundo"
-        android:layout_width="450dp"
+        android:layout_width="match_parent"
         android:layout_height="153dp"
         android:background="#0A7F8F"
+        android:minWidth="410dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,19 +24,17 @@
         android:id="@+id/icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="410dp"
-        android:layout_marginBottom="113dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fundo"
-        app:layout_constraintEnd_toEndOf="@+id/fundo"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="-50dp"
+        app:layout_constraintBottom_toTopOf="@+id/fundo"
         app:layout_constraintStart_toStartOf="@id/fundo"
-        app:layout_constraintTop_toTopOf="@id/fundo"
         app:srcCompat="@drawable/icone" />
 
     <TextView
         android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="113dp"
         android:text="PARTNER"
@@ -43,17 +42,16 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/fundo"
-        app:layout_constraintEnd_toStartOf="@+id/buttonhome"
-        app:layout_constraintHorizontal_bias="0.018"
         app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="@+id/fundo" />
+        app:layout_constraintTop_toTopOf="@+id/fundo"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonhome"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="388dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="350dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="@color/bluHome"
         android:foregroundTint="#0A7F8E"
@@ -80,36 +78,48 @@
         app:layout_constraintStart_toStartOf="@+id/fundo"
         app:layout_constraintTop_toBottomOf="@id/nome" />
 
+
     <Button
         android:id="@+id/buttonperfil"
         android:layout_width="77dp"
         android:layout_height="70dp"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="200dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="194dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="3dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/person_svgrepo_com"
         app:layout_constraintBottom_toBottomOf="@+id/fundo"
         app:layout_constraintEnd_toEndOf="@+id/fundo"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/buttonatividades"
-        app:layout_constraintTop_toBottomOf="@id/nome" />
+        app:layout_constraintTop_toBottomOf="@id/nome"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="414dp"
+        android:layout_height="579dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fundo"
+        app:layout_constraintVertical_bias="0.0">
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/buttonagenda"
         android:layout_width="77dp"
         android:layout_height="70dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="61dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="-72dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/baseline_book_24"
-        app:layout_constraintBottom_toBottomOf="@+id/fundo"
-        app:layout_constraintEnd_toEndOf="@+id/fundo"
-        app:layout_constraintStart_toEndOf="@id/buttonperfil"
-        app:layout_constraintTop_toBottomOf="@id/nome" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fundo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

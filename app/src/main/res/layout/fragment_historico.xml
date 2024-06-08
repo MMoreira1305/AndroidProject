@@ -62,7 +62,7 @@
                     android:textAlignment="center">
 
                     <TextView
-                        android:layout_width="170dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
                         android:text="@string/activity_name"
@@ -71,7 +71,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:text="Data"
                         android:textAlignment="center"
@@ -79,7 +79,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="97dp"
                         android:layout_height="wrap_content"
                         android:text="@string/activity_info"
                         android:textAlignment="center"
@@ -87,41 +87,7 @@
                         android:textSize="16sp" />
                 </TableRow>
                 <!-- Row 2 -->
-                <TableRow
-                    android:background="#3CB7AF"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:minHeight="54dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#3CB7AF"
-                        android:text="Row 1, Col 1"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#3CB7AF"
-                        android:text="@string/activity_date"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/CustomButtonStyle"
-                        android:layout_width="70dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="16dp"
-                        android:background="@drawable/rounded_button"
-                        android:text="@string/activity_info"
-                        android:textAlignment="center"
-                        android:textColor="#3CB7AF"
-                        android:textSize="14sp" />
-
-
-                </TableRow>
             </TableLayout>
         </ScrollView>
 

@@ -8,7 +8,6 @@
     tools:context="com.example.partner.view.Perfil">
 
     <TextView
-        android:id="@+id/fundo"
         android:layout_width="450dp"
         android:layout_height="153dp"
         android:layout_marginTop="388dp"

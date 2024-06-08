@@ -29,6 +29,7 @@ import com.example.hello_world.R
 import com.example.hello_world.databinding.FragmentHistoricoBinding
 import com.example.partner.model.History
 import com.example.partner.model.Info
+import com.example.partner.model.User
 import com.example.partner.util.Converters
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.api.Distribution.BucketOptions.Linear
@@ -44,6 +45,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyModel: History
     private val TAG = "HistoryFragment"
     private var converters = Converters()
+    private lateinit var user: User
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -65,32 +67,57 @@ class HistoryFragment : Fragment() {
 
         return binding.root
     }
+    @Suppress("DEPRECATION")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Recuperar os dados do usuário do Bundle
+        Log.i(TAG,"User vindo do login: ${(arguments?.getSerializable("USER_DATA") as User?)!!}")
+        user = (arguments?.getSerializable("USER_DATA") as User?)!!
+
+    }
+
 
     private fun readDataFromFirebase() {
         Log.i(TAG, "readDataFromFirebase: Started")
-        database.child("log_activities").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
-                    val dateActivity = dataSnapshot.child("date").getValue(String::class.java)
-                    val infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
+        this.user = (arguments?.getSerializable("USER_DATA") as User?)!!
+        Log.i(TAG, "Usuário: ${user}")
+        try{
+            database.child("log_activities").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (dataSnapshot in snapshot.children) {
+                        var nameActivity: String? = null
+                        var dateActivity: String? = null
+                        var infoActivity: Info? = null
+                        Log.i(TAG, "Loop: Entrou no loop")
 
-                    if (nameActivity != null && dateActivity != null && infoActivity != null) {
-                        historyModel.nameActivity = nameActivity
-                        historyModel.dateActivity = dateActivity
-                        historyModel.infoActivity = infoActivity
+                        val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
+                        val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
+                        Log.i(TAG, "IdAluno: ${idAluno} , IdTurma: ${idTurma}")
+                        if (user.id == idAluno.toString() && user.turma == idTurma.toString()) {
+                            Log.i(TAG, "Entrou aqui")
+                            nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
+                            dateActivity = dataSnapshot.child("date").getValue(String::class.java)
+                            infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
+                        }
 
-                        addRowToTable(historyModel.nameActivity, historyModel.dateActivity, historyModel.infoActivity)
-                    } else {
-                        Log.e(TAG, "Invalid data at ${dataSnapshot.key}")
+                        if (nameActivity != null && dateActivity != null && infoActivity != null) {
+                            historyModel.nameActivity = nameActivity
+                            historyModel.dateActivity = dateActivity
+                            historyModel.infoActivity = infoActivity
+
+                            addRowToTable(historyModel.nameActivity, historyModel.dateActivity, historyModel.infoActivity)
+                        }
                     }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG, "Failed to read data", error.toException())
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "Failed to read data", error.toException())
+                }
+            })
+        }catch (e: Exception){
+            Log.e(TAG, "Error to read history")
+        }
     }
 
     @SuppressLint("WeekBasedYear")
@@ -103,7 +130,7 @@ class HistoryFragment : Fragment() {
         val tableRow = TableRow(requireContext()).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT
+                converters.dpToPx(100)
             )
             if(dateActivityCompleted != null){
                 setBackgroundColor(Color.parseColor("#3CB7AF"))
@@ -113,7 +140,7 @@ class HistoryFragment : Fragment() {
             }
             setHorizontalGravity(Gravity.CENTER)
             setVerticalGravity(Gravity.CENTER)
-            minimumHeight = 54
+            minimumHeight = 60
         }
 
         val textViewActivityName = TextView(requireContext()).apply {

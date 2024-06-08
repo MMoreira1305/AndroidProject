@@ -35,10 +35,11 @@
     <string name="activity_name" translatable="false">Atividade</string>
     <string name="activity_date" translatable="false">01/01/2024</string>
     <string name="activity_info" translatable="false">Info</string>
-    <string name="activity_history" translatable="false">Histórico</string>
+    <string name="activity_history" translatable="false">HISTORICO</string>
     <string name="cadastrar" translatable="false">cadastrar</string>
     <string name="search" translatable="false">Pesquisar</string>
-
+    <string name="user_data_not_found" translatable="false">Usuário não encontrado</string>
+    <string name="user_data_error" translatable="false">Erro ao fazer login</string>
     <string name="aluno" translatable="false">Sergio Henrique Seixas</string>
     <string name="matriculaperfil" translatable="false">MATRÍCULA</string>
     <string name="turnoperfil" translatable="false">TURNO</string>

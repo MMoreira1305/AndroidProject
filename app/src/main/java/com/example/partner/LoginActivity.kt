@@ -2,25 +2,26 @@ package com.example.partner
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.partner.model.User
 import com.example.hello_world.R
 import com.example.hello_world.databinding.ActivityLoginBinding
-import com.example.partner.model.EMAIL_REGEX
-import com.example.partner.model.isFieldValid
+import com.example.partner.util.EMAIL_REGEX
+import com.example.partner.util.isFieldValid
 import com.example.partner.view.Cadastro
 import com.example.partner.view.Homepage
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +65,37 @@ class LoginActivity : AppCompatActivity() {
             result = false
         }
         if (result) {
-            val intent = Intent(this@LoginActivity, Homepage::class.java)
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    startActivity(intent)
+                    // Authentication succeeded, fetch user data from Realtime Database
+                    val userId = auth.currentUser?.uid
+                    if (userId != null) {
+                        val database = FirebaseDatabase.getInstance()
+                        val userRef = database.getReference("users").child(userId)
+                        userRef.get().addOnSuccessListener { snapshot ->
+                            if (snapshot.exists()) {
+                                // Assuming your user data is in a User model class
+                                val user: User? = snapshot.getValue(User::class.java)
+                                //val user = snapshot.getValue(User::class.java)
+                                user?.id = userId
+                                val intent = Intent(this@LoginActivity, Homepage::class.java)
+                                intent.putExtra("USER_DATA", user as Parcelable)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    getString(R.string.user_data_not_found),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.user_data_error),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
                 } else {
                     Toast.makeText(
                         this@LoginActivity,

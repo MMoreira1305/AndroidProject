@@ -10,19 +10,26 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.hello_world.R
+import com.example.hello_world.databinding.ActivityHomepageBinding
+import com.example.partner.model.User
 
 class Homepage : AppCompatActivity() {
+    private lateinit var binding: ActivityHomepageBinding
     @SuppressLint("WrongViewCast")
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide() // Adicionado para remover a barra de título
         enableEdgeToEdge()
-        setContentView(R.layout.activity_homepage)
+        binding = ActivityHomepageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val user = intent.getSerializableExtra("USER_DATA") as User?
 
         // Referência ao botão e ao layout container
         val buttonAtividades: Button = findViewById(R.id.buttonatividades)
@@ -31,11 +38,14 @@ class Homepage : AppCompatActivity() {
         buttonAtividades.setOnClickListener {
             // Criar uma instância do HistoryFragment
             val historyFragment = HistoryFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("USER_DATA", user)
+            historyFragment.arguments = bundle
 
             // Substituir o contêiner de fragmentos pelo HistoryFragment
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, historyFragment)
-                .addToBackStack(null)  // Adiciona a transação à pilha de volta para permitir navegação
+                .addToBackStack(null) // Adiciona a transação à pilha de volta para permitir navegação
                 .commit()
         }
     }

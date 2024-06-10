@@ -33,6 +33,20 @@ class Homepage : AppCompatActivity() {
 
         // Referência ao botão e ao layout container
         val buttonAtividades: Button = findViewById(R.id.buttonatividades)
+        val buttonPerfil: Button = findViewById(R.id.buttonperfil)
+
+        buttonPerfil.setOnClickListener {
+            val perfilFragment = PerfilFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("USER_DATA", user)
+            perfilFragment.arguments = bundle
+
+            // Substituir o contêiner de fragmentos pelo HistoryFragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, perfilFragment)
+                .addToBackStack(null) // Adiciona a transação à pilha de volta para permitir navegação
+                .commit()
+        }
 
         // Configura o listener para o botão
         buttonAtividades.setOnClickListener {

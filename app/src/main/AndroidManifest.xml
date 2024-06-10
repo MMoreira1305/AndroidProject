@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Listview"
         tools:targetApi="31">
         <activity
-            android:name="com.example.partner.view.Perfil"
+            android:name="com.example.partner.view.PerfilFragment"
             android:exported="false" />
         <activity
             android:name="com.example.partner.view.Homepage"

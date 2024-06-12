@@ -21,10 +21,11 @@ https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=17
 - Apresentar uma lista das tarefas e trabalhos que ainda não foram concluídos pelo aluno. Onde ele pode visualizar todas as tarefas pendentes. Os itens pendentes devem incluir informações como nome da tarefa ou trabalho, data de vencimento, e possíveis observações associadas.
 https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=92-187&mode=design&t=1VhsHgvTy4a1oCwa-0
 
-- Permitir que o aluno se conecte a uma turma utilizando um código de matrícula fornecido. A funcionalidade deve estar disponível no perfil do aluno, onde ele pode inserir o código de matrícula para se juntar à turma. Após a conexão bem-sucedida, o aluno deve ter acesso às informações da turma, como materiais de estudo, comunicados e eventos.
+- Permitir que o aluno se conecte a uma turma utilizando um código de matrícula fornecido. Onde ele pode inserir o código de matrícula para se juntar à turma. Após a conexão bem-sucedida, o aluno deve ter acesso às informações da turma, como materiais de estudo, comunicados e eventos.
 https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=198-9&mode=design&t=1VhsHgvTy4a1oCwa-0
 
-- O sistema deve enviar notificações para o aluno quando uma atividade estiver próxima do prazo de conclusão. As notificações devem ser enviadas com antecedência, permitindo ao aluno tempo suficiente para concluir a atividade antes do prazo. As notificações podem ser enviadas através de alertas no aplicativo móvel
+- Permitir a visualização de informações do aluno na tela de perfil. A funcionalidade deve estar disponível no perfil do aluno, onde ele ou o responsável pode visualizar as seguintes informações: matrícula, data de criação, e-mail, turno, contato e data de nascimento. 
+https://www.figma.com/design/WSvnA8T5Ks6LqxRmH7AKE8/Partner?node-id=487-2&t=z9qhGjyIvuwaK1H4-4
 
 - Permitir que o aluno crie e gerencie notas diretamente no aplicativo móvel. As notas podem ser usadas para anotações pessoais, lembretes, resumos de aulas, entre outros fins. As notas devem ser editáveis e permitir formatação básica de texto.
 https://www.figma.com/file/WSvnA8T5Ks6LqxRmH7AKE8/Partner?type=design&node-id=185-267&mode=design&t=1VhsHgvTy4a1oCwa-0

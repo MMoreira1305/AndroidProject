@@ -11,28 +11,18 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.marginStart
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import com.example.hello_world.R
 import com.example.hello_world.databinding.FragmentHistoricoBinding
 import com.example.partner.model.History
 import com.example.partner.model.Info
 import com.example.partner.model.User
 import com.example.partner.util.Converters
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -130,7 +120,7 @@ class HistoryFragment : Fragment() {
         val tableRow = TableRow(requireContext()).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                converters.dpToPx(100)
+                TableRow.LayoutParams.MATCH_PARENT
             )
             if(dateActivityCompleted != null){
                 setBackgroundColor(Color.parseColor("#3CB7AF"))
@@ -167,8 +157,6 @@ class HistoryFragment : Fragment() {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
             text = "INFO"
             textSize = 14f
-            width = converters.dpToPx(0)
-            height = converters.dpToPx(0)
             gravity = Gravity.CENTER
             setTextColor(Color.parseColor("#3CB7AF"))
             setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button))

@@ -51,6 +51,30 @@ class PerfilFragment : Fragment() {
         // Exibir o nome do usuário no TextView com o id textView3
         val textView3 = view.findViewById<TextView>(R.id.textView3)
         textView3.text = user.name
+
+        // Exibir a matrícula do usuário no TextView com o id textView11
+        val textView11 = view.findViewById<TextView>(R.id.textView11)
+        textView11.text = user.matricula
+
+        // Exibir o email do usuário no TextView com o id textView15
+        val textView15 = view.findViewById<TextView>(R.id.textView15)
+        textView15.text = user.email
+
+        // Exibir o telefone do usuário no TextView com o id textView14
+        val textView14 = view.findViewById<TextView>(R.id.textView14)
+        textView14.text = user.phone
+
+        // Exibir o turno do usuário no TextView com o id textView12
+        val textView12 = view.findViewById<TextView>(R.id.textView12)
+        textView12.text = user.turno
+
+        // Exibir a data de criação do usuário no TextView com o id textView13
+        val textView13 = view.findViewById<TextView>(R.id.textView13)
+        textView13.text = user.data_criacao
+
+        // Exibir a data de nascimento do usuário no TextView com o id textView16
+        val textView16 = view.findViewById<TextView>(R.id.textView16)
+        textView16.text = user.data_nasc
     }
 
 

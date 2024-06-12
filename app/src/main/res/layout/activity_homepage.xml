@@ -50,52 +50,42 @@
         android:id="@+id/buttonhome"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="350dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="31dp"
         android:backgroundTint="@color/bluHome"
         android:foregroundTint="#0A7F8E"
         app:icon="@drawable/baseline_home_24"
-        app:layout_constraintBottom_toTopOf="@+id/buttonagenda"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fundo"
-        app:layout_constraintTop_toTopOf="@+id/fundo"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonatividades"
         android:layout_width="77dp"
         android:layout_height="70dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="327dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="581dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/tasks_all_svgrepo_com"
-        app:layout_constraintBottom_toBottomOf="@+id/fundo"
-        app:layout_constraintEnd_toEndOf="@+id/fundo"
-        app:layout_constraintStart_toStartOf="@+id/fundo"
-        app:layout_constraintTop_toBottomOf="@id/nome" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
         android:id="@+id/buttonperfil"
         android:layout_width="77dp"
         android:layout_height="70dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="581dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/person_svgrepo_com"
-        app:layout_constraintBottom_toBottomOf="@+id/fundo"
-        app:layout_constraintEnd_toEndOf="@+id/fundo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/buttonatividades"
-        app:layout_constraintTop_toBottomOf="@id/nome"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -115,11 +105,15 @@
         android:layout_width="77dp"
         android:layout_height="70dp"
         android:layout_marginStart="167dp"
-        android:layout_marginTop="-72dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="167dp"
+        android:layout_marginBottom="579dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/baseline_book_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fundo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

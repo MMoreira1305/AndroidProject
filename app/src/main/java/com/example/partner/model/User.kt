@@ -11,5 +11,8 @@ data class User(
     var name: String? = "",
     var email: String? = "",
     var turma: String? = "",
+    var turno: String? = "",
+    var data_criacao: String? = "",
+    var data_nasc: String? = "",
     var phone: String? = null
 ) : Serializable, Parcelable

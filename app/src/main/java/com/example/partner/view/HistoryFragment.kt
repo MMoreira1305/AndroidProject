@@ -34,7 +34,6 @@ class HistoryFragment : Fragment() {
     private lateinit var binding: FragmentHistoricoBinding
     private lateinit var historyModel: History
     private val TAG = "HistoryFragment"
-    private var converters = Converters()
     private lateinit var user: User
 
     @SuppressLint("MissingInflatedId")
@@ -186,4 +185,5 @@ class HistoryFragment : Fragment() {
         tableRow.addView(textViewInfo)
         tableLayout.addView(tableRow)
     }
+
 }

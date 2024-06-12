@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -20,8 +21,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentManager
 import com.example.hello_world.R
 import com.example.hello_world.databinding.ActivityHomepageBinding
+import com.example.partner.model.Activity
+import com.example.partner.model.History
 import com.example.partner.model.Info
 import com.example.partner.model.User
 import com.google.firebase.database.DataSnapshot
@@ -30,6 +34,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class Homepage : AppCompatActivity() {
@@ -38,6 +43,8 @@ class Homepage : AppCompatActivity() {
     private lateinit var user: User
     private lateinit var database: DatabaseReference
     private lateinit var tableLayout: TableLayout
+    private lateinit var activity: Activity
+    private lateinit var history: History
 
     @SuppressLint("WrongViewCast")
     @Suppress("DEPRECATION")
@@ -59,6 +66,15 @@ class Homepage : AppCompatActivity() {
         // Referência ao botão e ao layout container
         val buttonAtividades: Button = findViewById(R.id.buttonatividades)
         val buttonPerfil: Button = findViewById(R.id.buttonperfil)
+        val icon: ImageView = findViewById(R.id.icon)
+        history = History()
+        activity = Activity()
+
+        readDataFromFirebase()
+
+        icon.setOnClickListener {
+            restoreHomePage()
+        }
 
         buttonPerfil.setOnClickListener {
             val perfilFragment = PerfilFragment()
@@ -67,10 +83,9 @@ class Homepage : AppCompatActivity() {
             perfilFragment.arguments = bundle
             homepageScroll.visibility = View.INVISIBLE
 
-
             // Substituir o contêiner de fragmentos pelo HistoryFragment
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, perfilFragment)
+                .replace(R.id.fragment_homepage, perfilFragment)
                 .addToBackStack(null) // Adiciona a transação à pilha de volta para permitir navegação
                 .commit()
         }
@@ -83,11 +98,11 @@ class Homepage : AppCompatActivity() {
             val bundle = Bundle()
             bundle.putSerializable("USER_DATA", user)
             historyFragment.arguments = bundle
-            binding.homepageScroll.visibility
+            //binding.homepageScroll.visibility
 
             // Substituir o contêiner de fragmentos pelo HistoryFragment
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, historyFragment)
+                .replace(R.id.fragment_homepage, historyFragment)
                 .addToBackStack(null) // Adiciona a transação à pilha de volta para permitir navegação
                 .commit()
         }
@@ -103,29 +118,50 @@ class Homepage : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dataSnapshot in snapshot.children) {
                         var nameActivity: String? = null
-                        var dateActivity: String? = null
+                        var turma: String? = null
                         var infoActivity: Info? = null
+                        val today = Date()
                         Log.i(TAG, "Loop: Entrou no loop")
 
-                        val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
                         val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
-                        Log.i(TAG, "IdAluno: ${idAluno} , IdTurma: ${idTurma}")
-                        if (user.turma == idTurma.toString()) {
+                        Log.i(TAG, "IdTurma: ${idTurma}")
+                        if (user.turma == idTurma) {
                             Log.i(TAG, "Entrou aqui")
                             nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
-                            dateActivity = dataSnapshot.child("date").getValue(String::class.java)
+                            Log.i(TAG, "nameActivity: ${nameActivity}")
+                            turma = dataSnapshot.child("turma").getValue(String::class.java)
+                            Log.i(TAG, "turma: ${turma}")
+                            Log.i(TAG, "info: ${dataSnapshot.child("info").getValue(Info::class.java)}")
                             infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
+                            Log.i(TAG, "info: ${infoActivity}")
+                            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                            val date = dateFormat.parse(infoActivity!!.dateActivity)
+                            Log.i(TAG, "date: ${date}")
+
+                            if(date != null && today.after(date)){
+                                Log.i(TAG, "Entrou aqui 2")
+                                history.nameActivity = nameActivity!!
+                                history.dateActivity = ""
+                                history.infoActivity = infoActivity
+
+                                // Mover a atividade de 'activities' para 'log_activities'
+                                database.child("log_activities").child(dataSnapshot.key!!)
+                                    .setValue(history)
+                                database.child("activities").child(dataSnapshot.key!!).removeValue()
+
+                                // Parar o loop para passar ao próximo registro
+                                break
+                            }
                         }
 
-                        if (nameActivity != null && dateActivity != null && infoActivity != null) {
-                            /*
-                            historyModel.nameActivity = nameActivity
-                            historyModel.dateActivity = dateActivity
-                            historyModel.infoActivity = infoActivity
+                        if (nameActivity != null && turma != null && infoActivity != null) {
+                            Log.i(TAG, "Entrou aqui 3")
 
-                            addRowToTable(historyModel.nameActivity, historyModel.dateActivity, historyModel.infoActivity)
+                            activity.nameActivity = nameActivity
+                            activity.turma = turma
+                            activity.infoActivity = infoActivity
 
-                             */
+                            addRowToTable(activity.nameActivity, activity.turma, activity.infoActivity)
                         }
                     }
                 }
@@ -139,30 +175,34 @@ class Homepage : AppCompatActivity() {
         }
     }
 
+    private fun restoreHomePage() {
+        // Remover todos os fragmentos empilhados
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        // Tornar a homepage visível novamente
+        val homepageScroll: ScrollView = findViewById(R.id.homepage_scroll)
+        homepageScroll.visibility = View.VISIBLE
+    }
+
+    private fun isActivityRunning(): Boolean {
+        return !isFinishing && !isDestroyed
+    }
+
     @SuppressLint("WeekBasedYear")
     private fun addRowToTable(activityName: String, date: String, info: Info) {
         val dateFormat = SimpleDateFormat("DD/MM/YYYY", Locale.getDefault())
-        // Transformando String em Date
-        val dateActivityCompleted: java.util.Date? = dateFormat.parse(date)
-        var nd : String = "";
 
-        val tableRow = TableRow(baseContext).apply {
+        val tableRow = TableRow(this).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT
             )
-            if(dateActivityCompleted != null){
-                setBackgroundColor(Color.parseColor("#3CB7AF"))
-            }else{
-                nd = "N/F"
-                setBackgroundColor(Color.parseColor("#FFFFFF"))
-            }
+            setBackgroundColor(Color.parseColor("#FFFFFF"))
             setHorizontalGravity(Gravity.CENTER)
             setVerticalGravity(Gravity.CENTER)
             minimumHeight = 60
         }
 
-        val textViewActivityName = TextView(baseContext).apply {
+        val textViewActivityName = TextView(this).apply {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
             text = activityName
             minHeight = 54
@@ -170,19 +210,7 @@ class Homepage : AppCompatActivity() {
             setPadding(16, 16, 16, 16)
         }
 
-        val textViewDate = TextView(baseContext).apply {
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
-            minHeight = 54
-            text = if(nd == "N/F"){
-                "N/F"
-            }else{
-                date
-            }
-            textSize = 16f
-            setPadding(16, 16, 16, 16)
-        }
-
-        val textViewInfo = AppCompatButton(baseContext).apply {
+        val textViewInfo = AppCompatButton(this).apply {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
             text = "INFO"
             textSize = 14f
@@ -190,29 +218,34 @@ class Homepage : AppCompatActivity() {
             setTextColor(Color.parseColor("#3CB7AF"))
             setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_button))
             setOnClickListener {
-                // Inflate the custom layout/view
-                val inflater = LayoutInflater.from(context)
-                val view = inflater.inflate(R.layout.custom_dialog, null)
-                // Set the activity data to the dialog's views
-                view.findViewById<TextView>(R.id.title).text = info.nameActivity
-                view.findViewById<TextView>(R.id.date).text = info.dateActivity
-                view.findViewById<TextView>(R.id.grade).text = info.resultActivity.toString()
-                view.findViewById<TextView>(R.id.description).text = info.descriptionInfo
+                if (isActivityRunning()) {
+                    runOnUiThread {
+                        // Inflate the custom layout/view
+                        val inflater = LayoutInflater.from(context)
+                        val view = inflater.inflate(R.layout.custom_dialog, null)
+                        // Set the activity data to the dialog's views
+                        view.findViewById<TextView>(R.id.title).text = info.nameActivity
+                        view.findViewById<TextView>(R.id.date).text = info.dateActivity
+                        view.findViewById<TextView>(R.id.grade).text = info.resultActivity.toString()
+                        view.findViewById<TextView>(R.id.description).text = info.descriptionInfo
 
-                // Create the AlertDialog
-                val dialog = AlertDialog.Builder(context)
-                    .setView(view)
-                    .setPositiveButton("CONFIRMAR") { dialog, _ -> dialog.dismiss() }
-                    .setPositiveButton("VOLTAR") {dialog, _ -> dialog.dismiss() }
-                    .create()
+                        // Create the AlertDialog
+                        val dialog = AlertDialog.Builder(this@Homepage)
+                            .setView(view)
+                            .setPositiveButton("CONFIRMAR") { dialog, _ -> dialog.dismiss() }
+                            .setPositiveButton("VOLTAR") { dialog, _ -> dialog.dismiss() }
+                            .create()
 
-                // Show the AlertDialog
-                dialog.show()
+                        // Show the AlertDialog
+                        dialog.show()
+                    }
+                } else {
+                    Log.w(TAG, "Activity is not in a valid state to show dialog")
+                }
             }
         }
 
         tableRow.addView(textViewActivityName)
-        tableRow.addView(textViewDate)
         tableRow.addView(textViewInfo)
         tableLayout.addView(tableRow)
     }

@@ -184,7 +184,6 @@ class HistoryFragment : Fragment() {
         tableRow.addView(textViewActivityName)
         tableRow.addView(textViewDate)
         tableRow.addView(textViewInfo)
-
         tableLayout.addView(tableRow)
     }
 }

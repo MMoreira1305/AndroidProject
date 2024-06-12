@@ -64,11 +64,9 @@
         android:layout_height="70dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="80dp"
-        android:layout_marginBottom="581dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/tasks_all_svgrepo_com"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,11 +77,9 @@
         android:layout_height="70dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="581dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/person_svgrepo_com"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,6 +94,15 @@
         app:layout_constraintTop_toBottomOf="@+id/fundo"
         app:layout_constraintVertical_bias="0.0">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:id="@+id/homepage_scroll"
+            tools:ignore="ScrollViewCount,UselessParent">
+
+        </ScrollView>
+
     </FrameLayout>
 
     <Button
@@ -107,11 +112,9 @@
         android:layout_marginStart="167dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="167dp"
-        android:layout_marginBottom="579dp"
         android:background="@null"
         android:backgroundTint="#3CA7B6"
         app:icon="@drawable/baseline_book_24"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

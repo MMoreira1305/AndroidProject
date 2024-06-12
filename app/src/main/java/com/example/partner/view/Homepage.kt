@@ -3,7 +3,10 @@ package com.example.partner.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@ class Homepage : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val homepageScroll: ScrollView = findViewById(R.id.homepage_scroll)
 
         val user = intent.getSerializableExtra("USER_DATA") as User?
 
@@ -40,6 +44,8 @@ class Homepage : AppCompatActivity() {
             val bundle = Bundle()
             bundle.putSerializable("USER_DATA", user)
             perfilFragment.arguments = bundle
+            homepageScroll.visibility = View.INVISIBLE
+
 
             // Substituir o contêiner de fragmentos pelo HistoryFragment
             supportFragmentManager.beginTransaction()
@@ -51,10 +57,12 @@ class Homepage : AppCompatActivity() {
         // Configura o listener para o botão
         buttonAtividades.setOnClickListener {
             // Criar uma instância do HistoryFragment
+            homepageScroll.visibility = View.INVISIBLE
             val historyFragment = HistoryFragment()
             val bundle = Bundle()
             bundle.putSerializable("USER_DATA", user)
             historyFragment.arguments = bundle
+            binding.homepageScroll.visibility
 
             // Substituir o contêiner de fragmentos pelo HistoryFragment
             supportFragmentManager.beginTransaction()

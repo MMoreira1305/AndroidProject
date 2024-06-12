@@ -78,13 +78,10 @@ class HistoryFragment : Fragment() {
                         var nameActivity: String? = null
                         var dateActivity: String? = null
                         var infoActivity: Info? = null
-                        Log.i(TAG, "Loop: Entrou no loop")
 
                         val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
                         val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
-                        Log.i(TAG, "IdAluno: ${idAluno} , IdTurma: ${idTurma}")
                         if (user.id == idAluno.toString() && user.turma == idTurma.toString()) {
-                            Log.i(TAG, "Entrou aqui")
                             nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
                             dateActivity = dataSnapshot.child("date").getValue(String::class.java)
                             infoActivity = dataSnapshot.child("info").getValue(Info::class.java)

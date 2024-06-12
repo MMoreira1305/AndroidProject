@@ -24,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
 import com.example.hello_world.R
 import com.example.hello_world.databinding.ActivityHomepageBinding
+import com.example.partner.dto.HistoryDTO
 import com.example.partner.model.Activity
 import com.example.partner.model.History
 import com.example.partner.model.Info
@@ -45,6 +46,7 @@ class Homepage : AppCompatActivity() {
     private lateinit var tableLayout: TableLayout
     private lateinit var activity: Activity
     private lateinit var history: History
+    private lateinit var historyDto: HistoryDTO
 
     @SuppressLint("WrongViewCast")
     @Suppress("DEPRECATION")
@@ -68,6 +70,7 @@ class Homepage : AppCompatActivity() {
         val buttonPerfil: Button = findViewById(R.id.buttonperfil)
         val icon: ImageView = findViewById(R.id.icon)
         history = History()
+        historyDto = HistoryDTO()
         activity = Activity()
 
         readDataFromFirebase()
@@ -140,13 +143,16 @@ class Homepage : AppCompatActivity() {
 
                             if(date != null && today.after(date)){
                                 Log.i(TAG, "Entrou aqui 2")
-                                history.nameActivity = nameActivity!!
-                                history.dateActivity = ""
-                                history.infoActivity = infoActivity
+                                historyDto.nameActivity = nameActivity!!
+                                historyDto.dateActivity = ""
+                                historyDto.infoActivity = infoActivity
+                                historyDto.aluno = user.id!!
+
+
 
                                 // Mover a atividade de 'activities' para 'log_activities'
                                 database.child("log_activities").child(dataSnapshot.key!!)
-                                    .setValue(history)
+                                    .setValue(historyDto)
                                 database.child("activities").child(dataSnapshot.key!!).removeValue()
 
                                 // Parar o loop para passar ao próximo registro
@@ -155,7 +161,6 @@ class Homepage : AppCompatActivity() {
                         }
 
                         if (nameActivity != null && turma != null && infoActivity != null) {
-                            Log.i(TAG, "Entrou aqui 3")
 
                             activity.nameActivity = nameActivity
                             activity.turma = turma

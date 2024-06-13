@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this@LoginActivity,
-                        getString(R.string.login_error),
+                        getString(R.string.user_data_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }

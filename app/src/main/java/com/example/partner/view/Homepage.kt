@@ -135,7 +135,9 @@ class Homepage : AppCompatActivity() {
                     tableLayout.removeAllViews()
 
                     for (dataSnapshot in snapshot.children) {
+                        Log.i(TAG, "entrou no for")
                         if (dataSnapshot != null) {
+                            Log.i(TAG, "entrou aqui 1")
                             var id: String? = null
                             var nameActivity: String? = null
                             var turma: String? = null
@@ -146,10 +148,12 @@ class Homepage : AppCompatActivity() {
 
                             // Verificar se a atividade já está no arrayActivities
                             if (idTurma != null && arrayActivities.contains(dataSnapshot.key)) {
+                                Log.i(TAG, "entrou aqui 2")
                                 continue // Pular se já estiver presente
                             }
 
                             if (user.turma == idTurma) {
+                                Log.i(TAG, "entrou aqui 3")
                                 id = dataSnapshot.child("id").getValue(String::class.java)
                                 nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
                                 turma = dataSnapshot.child("turma").getValue(String::class.java)
@@ -174,6 +178,7 @@ class Homepage : AppCompatActivity() {
                             }
 
                             if (nameActivity != null && turma != null && infoActivity != null) {
+                                Log.i(TAG, "entrou aqui 4")
                                 activity.nameActivity = nameActivity
                                 activity.turma = turma
                                 activity.infoActivity = infoActivity
@@ -211,20 +216,18 @@ class Homepage : AppCompatActivity() {
     @Suppress("DEPRECATION")
     @SuppressLint("WeekBasedYear")
     private fun addRowToTable(id: String?, activityName: String, turma: String, info: Info, key: String) {
-        val dateFormat = SimpleDateFormat("DD/MM/YYYY", Locale.getDefault())
         val tableRow = TableRow(this).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.MATCH_PARENT
+                TableRow.LayoutParams.WRAP_CONTENT
             )
             setBackgroundColor(Color.parseColor("#FFFFFF"))
-            setHorizontalGravity(Gravity.CENTER)
-            setVerticalGravity(Gravity.CENTER)
+            setHorizontalGravity(Gravity.CENTER_VERTICAL)
             minimumHeight = 60
         }
 
         val textViewActivityName = TextView(this).apply {
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
+            textAlignment = View.TEXT_ALIGNMENT_VIEW_START
             text = activityName
             minHeight = 54
             textSize = 16f
@@ -306,10 +309,27 @@ class Homepage : AppCompatActivity() {
             }
         }
 
+        // Definindo parâmetros de layout para adicionar margem entre os elementos
+        val layoutParamsActivityName = TableRow.LayoutParams(
+            0,
+            TableRow.LayoutParams.WRAP_CONTENT,
+            1f
+        )
+        textViewActivityName.layoutParams = layoutParamsActivityName
+
+        val layoutParamsInfoButton = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(28, 0, 0, 0) // Adicionando margem à esquerda
+        }
+        textViewInfo.layoutParams = layoutParamsInfoButton
+
         tableRow.addView(textViewActivityName)
         tableRow.addView(textViewInfo)
         tableLayout.addView(tableRow)
     }
+
 
     // Handle the result of file selection
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

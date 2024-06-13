@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -49,10 +50,9 @@ class HistoryFragment : Fragment() {
 
         // Lendo os dados do Firebase
         readDataFromFirebase()
-
-
         return binding.root
     }
+
     @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,19 +61,38 @@ class HistoryFragment : Fragment() {
         Log.i(TAG,"User vindo do login: ${(arguments?.getSerializable("USER_DATA") as User?)!!}")
         user = (arguments?.getSerializable("USER_DATA") as User?)!!
 
+        binding.buttonSearch.setOnClickListener {
+            val searchText = binding.editTextDate.text.toString()
+            filterTableByActivityName(searchText)
+        }
     }
 
+    private fun filterTableByActivityName(searchText: String) {
+        // Iterar sobre todas as linhas da tabela e verificar se o nome da atividade corresponde ao texto de pesquisa
+        for (i in 0 until tableLayout.childCount) {
+            val row = tableLayout.getChildAt(i) as TableRow
+            val textViewActivityName = row.getChildAt(0) as TextView
+            if (textViewActivityName.text.toString().contains(searchText, true)) {
+                row.visibility = View.VISIBLE
+            } else {
+                row.visibility = View.GONE
+            }
+        }
+    }
 
     private fun readDataFromFirebase() {
         Log.i(TAG, "readDataFromFirebase: Started")
         this.user = (arguments?.getSerializable("USER_DATA") as User?)!!
         Log.i(TAG, "Usuário: ${user}")
         var arrayHistory = HashSet<String>() // Usar HashSet para evitar duplicatas
+        val activitiesList = mutableListOf<History>()
+
         try {
             database.child("log_activities").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     // Limpar a tabela antes de adicionar novos dados
                     tableLayout.removeAllViews()
+                    activitiesList.clear()
 
                     for (dataSnapshot in snapshot.children) {
                         var idActivity = dataSnapshot.child("id").getValue(String::class.java)
@@ -92,14 +111,25 @@ class HistoryFragment : Fragment() {
                         }
 
                         if (nameActivity != null && infoActivity != null) {
+                            historyModel = History()
                             historyModel.nameActivity = nameActivity
-                            historyModel.dateActivity = dateActivity
+                            historyModel.dateActivity = dateActivity ?: ""
                             historyModel.infoActivity = infoActivity
                             arrayHistory.add(idActivity!!)
 
-                            addRowToTable(historyModel.nameActivity,
-                                historyModel.dateActivity!!, historyModel.infoActivity)
+                            activitiesList.add(historyModel)
                         }
+                    }
+
+                    // Ordenar a lista de atividades pela data, considerando "N/F" como data vazia
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    activitiesList.sortWith(compareBy {
+                        if (it.dateActivity!!.isEmpty()) null else dateFormat.parse(it.dateActivity)
+                    })
+
+                    // Adicionar as linhas ordenadas à tabela
+                    for (activity in activitiesList) {
+                        addRowToTable(activity.nameActivity, activity.dateActivity!!, activity.infoActivity)
                     }
                 }
 
@@ -114,16 +144,16 @@ class HistoryFragment : Fragment() {
 
     @SuppressLint("WeekBasedYear")
     private fun addRowToTable(activityName: String, date: String, info: Info) {
-        var nd : String = "";
+        var nd = ""
 
         val tableRow = TableRow(requireContext()).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT
             )
-            if(date != ""){
+            if (date.isNotEmpty()) {
                 setBackgroundColor(Color.parseColor("#3CB7AF"))
-            }else{
+            } else {
                 nd = "N/F"
                 setBackgroundColor(Color.parseColor("#FFF37D7D"))
             }
@@ -143,11 +173,7 @@ class HistoryFragment : Fragment() {
         val textViewDate = TextView(requireContext()).apply {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
             minHeight = 54
-            text = if(nd == "N/F"){
-                "N/F"
-            }else{
-                date
-            }
+            text = if (nd == "N/F") "N/F" else date
             textSize = 16f
             setPadding(16, 16, 16, 16)
         }
@@ -185,5 +211,4 @@ class HistoryFragment : Fragment() {
         tableRow.addView(textViewInfo)
         tableLayout.addView(tableRow)
     }
-
 }

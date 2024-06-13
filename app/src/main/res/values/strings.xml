@@ -39,7 +39,7 @@
     <string name="cadastrar" translatable="false">cadastrar</string>
     <string name="search" translatable="false">Pesquisar</string>
     <string name="user_data_not_found" translatable="false">Usuário não encontrado</string>
-    <string name="user_data_error" translatable="false">Erro ao fazer login</string>
+    <string name="user_data_error" translatable="false">Erro ao fazer login, verifique as credenciais</string>
     <string name="aluno" translatable="false">Sergio Henrique Seixas</string>
     <string name="matriculaperfil" translatable="false">MATRÍCULA</string>
     <string name="turnoperfil" translatable="false">TURNO</string>

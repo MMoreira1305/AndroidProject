@@ -4,7 +4,7 @@ import com.example.partner.model.Info
 
 data class HistoryDTO(
     var nameActivity: String = "",
-    var dateActivity: String = "",
-    var infoActivity: Info = Info(),
+    var date: String = "",
+    var info: Info = Info(),
     var aluno: String = ""
 )

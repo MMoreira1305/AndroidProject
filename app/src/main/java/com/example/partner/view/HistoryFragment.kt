@@ -71,16 +71,26 @@ class HistoryFragment : Fragment() {
         Log.i(TAG, "readDataFromFirebase: Started")
         this.user = (arguments?.getSerializable("USER_DATA") as User?)!!
         Log.i(TAG, "Usuário: ${user}")
+        var arrayHistory = ArrayList<History>()
         try{
             database.child("log_activities").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dataSnapshot in snapshot.children) {
+                        val idActivity = dataSnapshot.child("id").getValue(String::class.java)
+                        for(historyFor in arrayHistory){
+                            if(idActivity==historyFor.id){
+                                break
+                            }
+                        }
+                        val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
+                        val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
+
                         var nameActivity: String? = null
                         var dateActivity: String? = null
                         var infoActivity: Info? = null
 
-                        val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
-                        val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
+
+
                         if (user.id == idAluno.toString() && user.turma == idTurma.toString()) {
                             nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
                             dateActivity = dataSnapshot.child("date").getValue(String::class.java)
@@ -91,6 +101,7 @@ class HistoryFragment : Fragment() {
                             historyModel.nameActivity = nameActivity
                             historyModel.dateActivity = dateActivity
                             historyModel.infoActivity = infoActivity
+                            arrayHistory.add(historyModel)
 
                             addRowToTable(historyModel.nameActivity, historyModel.dateActivity, historyModel.infoActivity)
                         }

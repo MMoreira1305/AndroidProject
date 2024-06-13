@@ -120,54 +120,54 @@ class Homepage : AppCompatActivity() {
             database.child("activities").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dataSnapshot in snapshot.children) {
-                        var nameActivity: String? = null
-                        var turma: String? = null
-                        var infoActivity: Info? = null
-                        val today = Date()
-                        Log.i(TAG, "Loop: Entrou no loop")
+                        if(dataSnapshot != null){
+                            var nameActivity: String? = null
+                            var turma: String? = null
+                            var infoActivity: Info? = null
+                            val today = Date()
+                            Log.i(TAG, "Loop: Entrou no loop")
 
-                        val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
-                        Log.i(TAG, "IdTurma: ${idTurma}")
-                        if (user.turma == idTurma) {
-                            Log.i(TAG, "Entrou aqui")
-                            nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
-                            Log.i(TAG, "nameActivity: ${nameActivity}")
-                            turma = dataSnapshot.child("turma").getValue(String::class.java)
-                            Log.i(TAG, "turma: ${turma}")
-                            Log.i(TAG, "info: ${dataSnapshot.child("info").getValue(Info::class.java)}")
-                            infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
-                            Log.i(TAG, "info: ${infoActivity}")
-                            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                            val date = dateFormat.parse(infoActivity!!.dateActivity)
-                            Log.i(TAG, "date: ${date}")
+                            val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
+                            Log.i(TAG, "IdTurma: ${idTurma}")
+                            if (user.turma == idTurma) {
+                                Log.i(TAG, "Entrou aqui")
+                                nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
+                                Log.i(TAG, "nameActivity: ${nameActivity}")
+                                turma = dataSnapshot.child("turma").getValue(String::class.java)
+                                Log.i(TAG, "turma: ${turma}")
+                                Log.i(TAG, "info: ${dataSnapshot.child("info").getValue(Info::class.java)}")
+                                infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
+                                Log.i(TAG, "info: ${infoActivity}")
+                                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                                val date = dateFormat.parse(infoActivity!!.dateActivity)
+                                Log.i(TAG, "date: ${date}")
 
-                            if(date != null && today.after(date)){
-                                Log.i(TAG, "Entrou aqui 2")
-                                historyDto.nameActivity = nameActivity!!
-                                historyDto.dateActivity = ""
-                                historyDto.infoActivity = infoActivity
-                                historyDto.aluno = user.id!!
+                                if(date != null && today.after(date)){
+                                    Log.i(TAG, "Entrou aqui 2")
+                                    historyDto.nameActivity = nameActivity!!
+                                    historyDto.date = ""
+                                    historyDto.info = infoActivity
+                                    historyDto.aluno = user.id!!
+                                    // Mover a atividade de 'activities' para 'log_activities'
+                                    database.child("log_activities").child(dataSnapshot.key!!)
+                                        .setValue(historyDto)
+                                    database.child("activities").child(dataSnapshot.key!!).removeValue()
 
+                                    // Parar o loop para passar ao próximo registro
+                                    break
+                                }
+                            }
 
+                            if (nameActivity != null && turma != null && infoActivity != null) {
 
-                                // Mover a atividade de 'activities' para 'log_activities'
-                                database.child("log_activities").child(dataSnapshot.key!!)
-                                    .setValue(historyDto)
-                                database.child("activities").child(dataSnapshot.key!!).removeValue()
+                                activity.nameActivity = nameActivity
+                                activity.turma = turma
+                                activity.infoActivity = infoActivity
 
-                                // Parar o loop para passar ao próximo registro
-                                break
+                                addRowToTable(activity.nameActivity, activity.turma, activity.infoActivity)
                             }
                         }
 
-                        if (nameActivity != null && turma != null && infoActivity != null) {
-
-                            activity.nameActivity = nameActivity
-                            activity.turma = turma
-                            activity.infoActivity = infoActivity
-
-                            addRowToTable(activity.nameActivity, activity.turma, activity.infoActivity)
-                        }
                     }
                 }
 

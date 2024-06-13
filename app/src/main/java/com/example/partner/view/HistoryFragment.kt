@@ -206,6 +206,14 @@ class HistoryFragment : Fragment() {
             }
         }
 
+        val layoutParamsInfoButton = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(16, 16, 16, 16) // Adicionando margem à esquerda
+        }
+        textViewInfo.layoutParams = layoutParamsInfoButton
+
         tableRow.addView(textViewActivityName)
         tableRow.addView(textViewDate)
         tableRow.addView(textViewInfo)

@@ -75,6 +75,8 @@ class Homepage : AppCompatActivity() {
         val buttonPerfil: Button = findViewById(R.id.buttonperfil)
         val buttonHome: Button = findViewById(R.id.buttonhome)
         val icon: ImageView = findViewById(R.id.icon)
+        val turno: TextView = findViewById(R.id.turno)
+        turno.text = user.turno
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         dateToday = dateFormat.format(Date())
         history = History()
@@ -268,6 +270,7 @@ class Homepage : AppCompatActivity() {
                         val dialog = AlertDialog.Builder(this@Homepage)
                             .setView(view)
                             .setPositiveButton("CONFIRMAR") { dialog, _ ->
+                                setTextColor(Color.BLACK)
                                 if (selectedFileUri != null) {
                                     val storageRef = FirebaseStorage.getInstance().reference
                                     val fileRef = storageRef.child("log_activities/${selectedFileUri!!.lastPathSegment}")
@@ -297,7 +300,9 @@ class Homepage : AppCompatActivity() {
                                 }
                                 dialog.dismiss()
                             }
-                            .setNegativeButton("VOLTAR") { dialog, _ -> dialog.cancel() }
+                            .setNegativeButton("VOLTAR") { dialog, _ ->
+                                setTextColor(Color.BLACK)
+                                dialog.cancel() }
                             .create()
 
                         // Show the AlertDialog

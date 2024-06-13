@@ -270,7 +270,6 @@ class Homepage : AppCompatActivity() {
                         val dialog = AlertDialog.Builder(this@Homepage)
                             .setView(view)
                             .setPositiveButton("CONFIRMAR") { dialog, _ ->
-                                setTextColor(Color.BLACK)
                                 if (selectedFileUri != null) {
                                     val storageRef = FirebaseStorage.getInstance().reference
                                     val fileRef = storageRef.child("log_activities/${selectedFileUri!!.lastPathSegment}")
@@ -301,7 +300,6 @@ class Homepage : AppCompatActivity() {
                                 dialog.dismiss()
                             }
                             .setNegativeButton("VOLTAR") { dialog, _ ->
-                                setTextColor(Color.BLACK)
                                 dialog.cancel() }
                             .create()
 
@@ -326,7 +324,7 @@ class Homepage : AppCompatActivity() {
             TableRow.LayoutParams.WRAP_CONTENT,
             TableRow.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(28, 0, 0, 0) // Adicionando margem à esquerda
+            setMargins(28, 0, 0, 16) // Adicionando margem à esquerda
         }
         textViewInfo.layoutParams = layoutParamsInfoButton
 

@@ -2,9 +2,7 @@ package com.example.partner.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -22,7 +20,6 @@ import com.example.hello_world.databinding.FragmentHistoricoBinding
 import com.example.partner.model.History
 import com.example.partner.model.Info
 import com.example.partner.model.User
-import com.example.partner.util.Converters
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -71,17 +68,16 @@ class HistoryFragment : Fragment() {
         Log.i(TAG, "readDataFromFirebase: Started")
         this.user = (arguments?.getSerializable("USER_DATA") as User?)!!
         Log.i(TAG, "Usuário: ${user}")
-        var arrayHistory = ArrayList<History>()
-        try{
+        var arrayHistory = HashSet<String>() // Usar HashSet para evitar duplicatas
+        try {
             database.child("log_activities").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    // Limpar a tabela antes de adicionar novos dados
+                    tableLayout.removeAllViews()
+
                     for (dataSnapshot in snapshot.children) {
-                        val idActivity = dataSnapshot.child("id").getValue(String::class.java)
-                        for(historyFor in arrayHistory){
-                            if(idActivity==historyFor.id){
-                                break
-                            }
-                        }
+                        var idActivity = dataSnapshot.child("id").getValue(String::class.java)
+
                         val idAluno = dataSnapshot.child("aluno").getValue(String::class.java)
                         val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
 
@@ -89,21 +85,20 @@ class HistoryFragment : Fragment() {
                         var dateActivity: String? = null
                         var infoActivity: Info? = null
 
-
-
-                        if (user.id == idAluno.toString() && user.turma == idTurma.toString()) {
+                        if (user.id == idAluno && user.turma == idTurma) {
                             nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
                             dateActivity = dataSnapshot.child("date").getValue(String::class.java)
                             infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
                         }
 
-                        if (nameActivity != null && dateActivity != null && infoActivity != null) {
+                        if (nameActivity != null && infoActivity != null) {
                             historyModel.nameActivity = nameActivity
                             historyModel.dateActivity = dateActivity
                             historyModel.infoActivity = infoActivity
-                            arrayHistory.add(historyModel)
+                            arrayHistory.add(idActivity!!)
 
-                            addRowToTable(historyModel.nameActivity, historyModel.dateActivity, historyModel.infoActivity)
+                            addRowToTable(historyModel.nameActivity,
+                                historyModel.dateActivity!!, historyModel.infoActivity)
                         }
                     }
                 }
@@ -112,16 +107,13 @@ class HistoryFragment : Fragment() {
                     Log.e(TAG, "Failed to read data", error.toException())
                 }
             })
-        }catch (e: Exception){
-            Log.e(TAG, "Error to read history")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error to read history", e)
         }
     }
 
     @SuppressLint("WeekBasedYear")
     private fun addRowToTable(activityName: String, date: String, info: Info) {
-        val dateFormat = SimpleDateFormat("DD/MM/YYYY", Locale.getDefault())
-        // Transformando String em Date
-        val dateActivityCompleted: java.util.Date? = dateFormat.parse(date)
         var nd : String = "";
 
         val tableRow = TableRow(requireContext()).apply {
@@ -129,11 +121,11 @@ class HistoryFragment : Fragment() {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT
             )
-            if(dateActivityCompleted != null){
+            if(date != ""){
                 setBackgroundColor(Color.parseColor("#3CB7AF"))
             }else{
                 nd = "N/F"
-                setBackgroundColor(Color.parseColor("#FFFFFF"))
+                setBackgroundColor(Color.parseColor("#FFF37D7D"))
             }
             setHorizontalGravity(Gravity.CENTER)
             setVerticalGravity(Gravity.CENTER)
@@ -170,7 +162,7 @@ class HistoryFragment : Fragment() {
             setOnClickListener {
                 // Inflate the custom layout/view
                 val inflater = LayoutInflater.from(requireContext())
-                val view = inflater.inflate(R.layout.custom_dialog, null)
+                val view = inflater.inflate(R.layout.custom_dialog_history, null)
                 // Set the activity data to the dialog's views
                 view.findViewById<TextView>(R.id.title).text = info.nameActivity
                 view.findViewById<TextView>(R.id.date).text = info.dateActivity

@@ -2,8 +2,11 @@ package com.example.partner.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -17,7 +20,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -34,6 +36,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,6 +50,8 @@ class Homepage : AppCompatActivity() {
     private lateinit var activity: Activity
     private lateinit var history: History
     private lateinit var historyDto: HistoryDTO
+    private var selectedFileUri: Uri? = null
+    private var dateToday: String = ""
 
     @SuppressLint("WrongViewCast")
     @Suppress("DEPRECATION")
@@ -68,7 +73,10 @@ class Homepage : AppCompatActivity() {
         // Referência ao botão e ao layout container
         val buttonAtividades: Button = findViewById(R.id.buttonatividades)
         val buttonPerfil: Button = findViewById(R.id.buttonperfil)
+        val buttonHome: Button = findViewById(R.id.buttonhome)
         val icon: ImageView = findViewById(R.id.icon)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        dateToday = dateFormat.format(Date())
         history = History()
         historyDto = HistoryDTO()
         activity = Activity()
@@ -77,6 +85,11 @@ class Homepage : AppCompatActivity() {
 
         icon.setOnClickListener {
             restoreHomePage()
+        }
+
+        buttonHome.setOnClickListener {
+            val intent = Intent(this@Homepage, Home::class.java)
+            startActivity(intent)
         }
 
         buttonPerfil.setOnClickListener {
@@ -113,42 +126,44 @@ class Homepage : AppCompatActivity() {
 
     @Suppress("DEPRECATION")
     private fun readDataFromFirebase() {
-        Log.i(TAG, "readDataFromFirebase: Started")
         this.user = (intent.getSerializableExtra("USER_DATA") as User?)!!
-        Log.i(TAG, "Usuário: ${user}")
-        try{
+        var arrayActivities = HashSet<String>() // Usar HashSet para evitar duplicatas
+        try {
             database.child("activities").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    // Limpar a tabela antes de adicionar novos dados
+                    tableLayout.removeAllViews()
+
                     for (dataSnapshot in snapshot.children) {
-                        if(dataSnapshot != null){
+                        if (dataSnapshot != null) {
+                            var id: String? = null
                             var nameActivity: String? = null
                             var turma: String? = null
                             var infoActivity: Info? = null
                             val today = Date()
-                            Log.i(TAG, "Loop: Entrou no loop")
 
                             val idTurma = dataSnapshot.child("turma").getValue(String::class.java)
-                            Log.i(TAG, "IdTurma: ${idTurma}")
+
+                            // Verificar se a atividade já está no arrayActivities
+                            if (idTurma != null && arrayActivities.contains(dataSnapshot.key)) {
+                                continue // Pular se já estiver presente
+                            }
+
                             if (user.turma == idTurma) {
-                                Log.i(TAG, "Entrou aqui")
+                                id = dataSnapshot.child("id").getValue(String::class.java)
                                 nameActivity = dataSnapshot.child("activityName").getValue(String::class.java)
-                                Log.i(TAG, "nameActivity: ${nameActivity}")
                                 turma = dataSnapshot.child("turma").getValue(String::class.java)
-                                Log.i(TAG, "turma: ${turma}")
-                                Log.i(TAG, "info: ${dataSnapshot.child("info").getValue(Info::class.java)}")
                                 infoActivity = dataSnapshot.child("info").getValue(Info::class.java)
-                                Log.i(TAG, "info: ${infoActivity}")
                                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                                 val date = dateFormat.parse(infoActivity!!.dateActivity)
-                                Log.i(TAG, "date: ${date}")
 
-                                if(date != null && today.after(date)){
-                                    Log.i(TAG, "Entrou aqui 2")
+                                if (date != null && today.after(date)) {
+                                    historyDto.id = id!!
                                     historyDto.nameActivity = nameActivity!!
                                     historyDto.date = ""
                                     historyDto.info = infoActivity
+                                    historyDto.turma = turma!!
                                     historyDto.aluno = user.id!!
-                                    // Mover a atividade de 'activities' para 'log_activities'
                                     database.child("log_activities").child(dataSnapshot.key!!)
                                         .setValue(historyDto)
                                     database.child("activities").child(dataSnapshot.key!!).removeValue()
@@ -159,15 +174,16 @@ class Homepage : AppCompatActivity() {
                             }
 
                             if (nameActivity != null && turma != null && infoActivity != null) {
-
                                 activity.nameActivity = nameActivity
                                 activity.turma = turma
                                 activity.infoActivity = infoActivity
+                                arrayActivities.add(dataSnapshot.key!!)
+                                val key: String = dataSnapshot.key.toString()
 
-                                addRowToTable(activity.nameActivity, activity.turma, activity.infoActivity)
+                                addRowToTable(id, activity.nameActivity,
+                                    activity.turma, activity.infoActivity, key)
                             }
                         }
-
                     }
                 }
 
@@ -175,8 +191,8 @@ class Homepage : AppCompatActivity() {
                     Log.e(TAG, "Failed to read data", error.toException())
                 }
             })
-        }catch (e: Exception){
-            Log.e(TAG, "Error to read history")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error to read history", e)
         }
     }
 
@@ -192,10 +208,10 @@ class Homepage : AppCompatActivity() {
         return !isFinishing && !isDestroyed
     }
 
+    @Suppress("DEPRECATION")
     @SuppressLint("WeekBasedYear")
-    private fun addRowToTable(activityName: String, date: String, info: Info) {
+    private fun addRowToTable(id: String?, activityName: String, turma: String, info: Info, key: String) {
         val dateFormat = SimpleDateFormat("DD/MM/YYYY", Locale.getDefault())
-
         val tableRow = TableRow(this).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
@@ -228,17 +244,57 @@ class Homepage : AppCompatActivity() {
                         // Inflate the custom layout/view
                         val inflater = LayoutInflater.from(context)
                         val view = inflater.inflate(R.layout.custom_dialog, null)
+
                         // Set the activity data to the dialog's views
                         view.findViewById<TextView>(R.id.title).text = info.nameActivity
                         view.findViewById<TextView>(R.id.date).text = info.dateActivity
                         view.findViewById<TextView>(R.id.grade).text = info.resultActivity.toString()
                         view.findViewById<TextView>(R.id.description).text = info.descriptionInfo
 
+                        // Handle file selection
+                        val selectFileButton = view.findViewById<Button>(R.id.select_file_button)
+                        selectFileButton.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                                type = "*/*"
+                                addCategory(Intent.CATEGORY_OPENABLE)
+                            }
+                            startActivityForResult(Intent.createChooser(intent, "Select File"), 1)
+                        }
+
                         // Create the AlertDialog
                         val dialog = AlertDialog.Builder(this@Homepage)
                             .setView(view)
-                            .setPositiveButton("CONFIRMAR") { dialog, _ -> dialog.dismiss() }
-                            .setPositiveButton("VOLTAR") { dialog, _ -> dialog.dismiss() }
+                            .setPositiveButton("CONFIRMAR") { dialog, _ ->
+                                if (selectedFileUri != null) {
+                                    val storageRef = FirebaseStorage.getInstance().reference
+                                    val fileRef = storageRef.child("log_activities/${selectedFileUri!!.lastPathSegment}")
+                                    val uploadTask = fileRef.putFile(selectedFileUri!!)
+
+                                    uploadTask.addOnSuccessListener {
+                                        fileRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                                            // Save the log activity with file URL
+                                            val logActivity = hashMapOf(
+                                                "info" to info,
+                                                "activityName" to activityName,
+                                                "id" to id,
+                                                "resultActivity" to null,
+                                                "date" to dateToday,
+                                                "turma" to turma,
+                                                "aluno" to user.id,
+                                                "descriptionInfo" to info.descriptionInfo,
+                                                "fileUrl" to downloadUri.toString()
+                                            )
+                                            database.child("activities").child(key).removeValue()
+                                            database.child("log_activities").push().setValue(logActivity)
+                                        }
+                                    }.addOnFailureListener {
+                                        // Handle unsuccessful uploads
+                                        Log.e(TAG, "File upload failed", it)
+                                    }
+                                }
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("VOLTAR") { dialog, _ -> dialog.cancel() }
                             .create()
 
                         // Show the AlertDialog
@@ -253,5 +309,15 @@ class Homepage : AppCompatActivity() {
         tableRow.addView(textViewActivityName)
         tableRow.addView(textViewInfo)
         tableLayout.addView(tableRow)
+    }
+
+    // Handle the result of file selection
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == android.app.Activity.RESULT_OK) {
+            data?.data?.let { uri ->
+                selectedFileUri = uri
+            }
+        }
     }
 }

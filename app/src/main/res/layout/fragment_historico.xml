@@ -33,10 +33,10 @@
 
         <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="363dp"
-            android:layout_height="469dp"
+            android:layout_width="362dp"
+            android:layout_height="385dp"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,40 +53,6 @@
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="6dp"
                 tools:layout_editor_absoluteY="119dp">
-
-                <!-- Row 1 -->
-                <TableRow
-                    android:background="#0A7F8F"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:minHeight="54dp"
-                    android:textAlignment="center">
-
-                    <TextView
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="0dp"
-                        android:text="@string/activity_name"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:text="Data"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="97dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/activity_info"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-                </TableRow>
-                <!-- Row 2 -->
 
             </TableLayout>
         </ScrollView>
@@ -132,6 +98,56 @@
                 android:textSize="14sp"
                 tools:ignore="MissingConstraints">
             </androidx.appcompat.widget.AppCompatButton>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="370dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            android:background="#0A7F8F"
+            android:gravity="center_horizontal|center_vertical"
+            android:minHeight="54dp"
+            android:textAlignment="center"
+            >
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="110dp"
+                android:text="@string/activity_name"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal|center_vertical"/>
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Data"
+                android:layout_marginLeft="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal|center_vertical"/>
+
+            <TextView
+                android:layout_width="97dp"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_info"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="120dp"
+                tools:ignore="RtlCompat" />
         </FrameLayout>
 
 

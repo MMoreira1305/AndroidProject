@@ -50,11 +50,4 @@
             android:gravity="center"/>
     </ScrollView>
 
-    <Button
-        android:layout_marginTop="80dp"
-        android:id="@+id/select_file_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select File" />
-
 </LinearLayout>
